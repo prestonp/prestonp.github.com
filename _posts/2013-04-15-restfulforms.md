@@ -38,80 +38,62 @@ app.resource('forums', require('./controllers/forum'));
 
 Define controllers/forum.js:
 
-<pre>
-  <code>
-exports.index = function(req, res){
-  res.send('forum index');
-};
+    exports.index = function(req, res){
+      res.send('forum index');
+    };
+    
+    exports.new = function(req, res){
+      res.send('new forum');
+    };
+    
+    exports.create = function(req, res){
+      res.send('create forum');
+    };
+    
+    exports.show = function(req, res){
+      res.send('show forum ' + req.forum.title);
+    };
+    
+    exports.edit = function(req, res){
+      res.send('edit forum ' + req.forum.title);
+    };
+    
+    exports.update = function(req, res){
+      res.send('update forum ' + req.forum.title);
+    };
+    
+    exports.destroy = function(req, res){
+      res.send('destroy forum ' + req.forum.title);
+    };
 
-exports.new = function(req, res){
-  res.send('new forum');
-};
-
-exports.create = function(req, res){
-  res.send('create forum');
-};
-
-exports.show = function(req, res){
-  res.send('show forum ' + req.forum.title);
-};
-
-exports.edit = function(req, res){
-  res.send('edit forum ' + req.forum.title);
-};
-
-exports.update = function(req, res){
-  res.send('update forum ' + req.forum.title);
-};
-
-exports.destroy = function(req, res){
-  res.send('destroy forum ' + req.forum.title);
-};
-  </code>
-</pre>
 
 Now we can browse to **http://localhost:3000/forums** which triggers **forum.index(req, res)**
 
 This makes routing *much easier* and consistent since you basically replace
 
-<pre>
-  <code>
-app.get('/forums', Forum.index)
-app.get('/forums/new', Forum.new)
-app.get('/forums/:id', Forum.show)
-app.post('/forums', Forum.create)
-app.put('/forums/:id', Forum.update)
-// etc..
-  </code>
-</pre>
+    app.get('/forums', Forum.index)
+    app.get('/forums/new', Forum.new)
+    app.get('/forums/:id', Forum.show)
+    app.post('/forums', Forum.create)
+    app.put('/forums/:id', Forum.update)
+    // etc..
 
 with a one-liner:
 
-<pre>
-  <code>
-app.resource('forums', require('./controllers/forum'));
-  </code>
-</pre>
-
+    app.resource('forums', require('./controllers/forum'));
 
 **Caveat**: HTML forms do not support PUT or DELETE methods, only GET and POST. One way to get around this is 
 to use POST and add a hidden value to specify if its PUT or DELETE. To support this, enable methodOverride() 
 in your express stack:
 
-```
-app.use(express.methodOverride());
-```
+    app.use(express.methodOverride());
 
 Then on the client side, we'll emulate a POST form by creating a typical POST form with a hidden `_method` var. We'll set 
 this to `put` so the server will automatically handle it
 
-```
-<form> ...
-
-  <input type="hidden" name="_method" value="put" />
-  
-</form>
-```
+    <form> ...
+      <input type="hidden" name="_method" value="put" />
+    </form>
 
 Then you can use app.put() or app.del() freely! Since express-resource uses HTTP PUT and DELETE for the update and delete actions,
 you can just tag forms with _method to emulate PUT and DELETE requests.
