@@ -4,9 +4,10 @@ title: RESTful forms in express
 category: posts
 ---
 
-Express by default is quite agnostic about application structure. I've been working on a personal project 
+Express by default is quite agnostic about application structure. I've been working on a personal project where
 listing routes in express quickly got bloated and cumbersome. Recently, I plugged 
-in [express-resource](https://github.com/visionmedia/express-resource) for *resourceful routing*.
+in [express-resource](https://github.com/visionmedia/express-resource) for *resourceful routing*. This reduced a lot
+of the explicit url routing to implicit REST actions.
 
 Basically in a RESTful architecture, CRUD operations (Create, read, update, delete)
 are implemented for resources. HTTP has request methods such as GET, POST, PUT, DELETE.
@@ -84,7 +85,7 @@ app.put('/forums/:id', Forum.update)
   </code>
 </pre>
 
-with one-liner:
+with a one-liner:
 
 <pre>
   <code>
@@ -104,13 +105,13 @@ app.use(express.methodOverride());
 Then on the client side, we'll emulate a POST form by creating a typical POST form with a hidden `_method` var. We'll set 
 this to `put` so the server will automatically handle it
 
-<pre>
-  <code>
+```
 <form> ...
+
   <input type="hidden" name="_method" value="put" />
+  
 </form>
-  </code>
-</pre>
+```
 
 Then you can use app.put() or app.del() freely! Since express-resource uses HTTP PUT and DELETE for the update and delete actions,
 you can just tag forms with _method to emulate PUT and DELETE requests.
