@@ -29,13 +29,13 @@ To implement this scheme we can simply require `express-resource` in our project
 var Resource = require('express-resource')
 ```
 
-This enables `app.resource` which maps our url scheme to the above actions
+This enables **app.resource** which maps our url scheme to the above actions:
 
 ```
 app.resource('forums', require('./controllers/forum'));
 ```
 
-Define controllers/forum.js
+Define controllers/forum.js:
 
 <pre>
   <code>
@@ -69,24 +69,28 @@ exports.destroy = function(req, res){
   </code>
 </pre>
 
-Now we can browse to `http://localhost:3000/forums` is triggers `forum.index(req, res)` 
+Now we can browse to **http://localhost:3000/forums** which triggers **forum.index(req, res)**
 
-This makes routing **much easier** and consistent since you basically replace
+This makes routing *much easier* and consistent since you basically replace
 
-```
+<pre>
+  <code>
 app.get('/forums', Forum.index)
 app.get('/forums/new', Forum.new)
 app.get('/forums/:id', Forum.show)
 app.post('/forums', Forum.create)
 app.put('/forums/:id', Forum.update)
 // etc..
-```
+  </code>
+</pre>
 
-with one-liner
+with one-liner:
 
-```
+<pre>
+  <code>
 app.resource('forums', require('./controllers/forum'));
-```
+  </code>
+</pre>
 
 
 **Caveat**: HTML forms do not support PUT or DELETE methods, only GET and POST. One way to get around this is 
@@ -100,11 +104,13 @@ app.use(express.methodOverride());
 Then on the client side, we'll emulate a POST form by creating a typical POST form with a hidden `_method` var. We'll set 
 this to `put` so the server will automatically handle it
 
-```
+<pre>
+  <code>
 <form> ...
   <input type="hidden" name="_method" value="put" />
 </form>
-```
+  </code>
+</pre>
 
 Then you can use app.put() or app.del() freely! Since express-resource uses HTTP PUT and DELETE for the update and delete actions,
 you can just tag forms with _method to emulate PUT and DELETE requests.
