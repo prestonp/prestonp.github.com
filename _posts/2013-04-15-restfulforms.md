@@ -14,27 +14,25 @@ are implemented for resources. HTTP has request methods such as GET, POST, PUT, 
 
 Using these request methods we can implement REST actions. As an example, lets define
 a **forum** resource:
-
-* GET     /forums              ->  index
-* GET     /forums/new          ->  new
-* POST    /forums              ->  create
-* GET     /forums/:forum       ->  show
-* GET     /forums/:forum/edit  ->  edit
-* PUT     /forums/:forum       ->  update
-* DELETE  /forums/:forum       ->  destroy
+     
+    HTTP    | URL                 |  Action 
+    ---------------------------------------
+    GET     /forums              ->  index
+    GET     /forums/new          ->  new
+    POST    /forums              ->  create
+    GET     /forums/:forum       ->  show
+    GET     /forums/:forum/edit  ->  edit
+    PUT     /forums/:forum       ->  update
+    DELETE  /forums/:forum       ->  destroy
 
 As a user browses to the above urls, we want the resource controller to handle the associated action.
 To implement this scheme we can simply require `express-resource` in our project:
 
-```
-var Resource = require('express-resource')
-```
+    var Resource = require('express-resource')
 
 This enables **app.resource** which maps our url scheme to the above actions:
 
-```
-app.resource('forums', require('./controllers/forum'));
-```
+    app.resource('forums', require('./controllers/forum'));
 
 Define controllers/forum.js:
 
