@@ -36,7 +36,7 @@ app.resource('forums', require('./controllers/forum'));
 
 Define controllers/forum.js
 
-```
+<code>
 exports.index = function(req, res){
   res.send('forum index');
 };
@@ -64,7 +64,7 @@ exports.update = function(req, res){
 exports.destroy = function(req, res){
   res.send('destroy forum ' + req.forum.title);
 };
-```
+</code>
 
 So.. going to `http://localhost:3000/forums` is mapped to `forum.index` 
 
