@@ -22,7 +22,8 @@ Example: A **forum** resource
 * PUT     /forums/:forum       ->  update
 * DELETE  /forums/:forum       ->  destroy
 
-To implement this scheme we can simply require `express-resource`:
+To implement this scheme we can simply require `express-resource` in our project:
+
 ```
 var Resource = require('express-resource')
 ```
@@ -33,7 +34,8 @@ This enables `app.resource` which maps our url scheme to the above actions
 app.resource('forums', require('./controllers/forum'));
 ```
 
-With `controllers/forum.js`
+Define controllers/forum.js
+
 ```
 exports.index = function(req, res){
   res.send('forum index');
@@ -67,6 +69,7 @@ exports.destroy = function(req, res){
 So.. going to `http://localhost:3000/forums` is mapped to `forum.index` 
 
 This makes routing **much easier** and consistent since you basically replace
+
 ```
 app.get('/forums', Forum.index)
 app.get('/forums/new', Forum.new)
