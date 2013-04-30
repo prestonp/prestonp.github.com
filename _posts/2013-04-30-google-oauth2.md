@@ -42,16 +42,11 @@ Next, configure your google strategy:
           https://www.googleapis.com/auth/userinfo.profile'
       },
       function(accessToken, refreshToken, profile, done) {
-         User.findOneAndUpdate(
-          { googleId: profile.id },         // Conditions
-          { googleId: profile.id            // Update
-          , name: profile.displayName },
-          { upsert: true },                 // Options
-          function(err, user) {             // Callback
-            if(err) { throw err; }
-            done(null, user);
-          }
-        );
+         User.updateOrCreate({ googleId: profile.id, 
+            function(err, user) {
+              if(err) { throw err; }
+                done(null, user);
+              });
       }
     ));
 
@@ -76,11 +71,26 @@ that session. Basically, the client hangs onto its ID while the server
 deserializes the id to the User object. This object is then accessed via
 `req.user`.
 
-The done() function is known as the *verify callback** which is called
+The done() function is known as the **verify callback** which is called
 after you check for valid credentials. In our case, we're using
 OAuth so we're checking to see if the id matches someone in our
 database. In basic authentication, you would check if username and
 password match and THEN use done().
+
+    passport.serializeUser(function(user, done) {
+      done(null, user.id);    // id stored in a delicious cookie
+    });
+
+    passport.deserializeUser(function(id, done) {
+      User
+        .findOne({ googleId: id })
+        .exec(function(err, user) {
+          done(err, user);    // Now req.user == user
+        });
+    });
+
+Here's an example of supporting multiple auth strategies. All you would need to
+do is configure more strategies like the above google example.
 
     passport.serializeUser(function(user, done) {
       var ids = {
