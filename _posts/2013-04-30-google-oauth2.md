@@ -42,11 +42,12 @@ Next, configure your google strategy:
           https://www.googleapis.com/auth/userinfo.profile'
       },
       function(accessToken, refreshToken, profile, done) {
-         User.updateOrCreate({ googleId: profile.id, 
+         User.updateOrCreate({ googleId: profile.id }, 
             function(err, user) {
               if(err) { throw err; }
                 done(null, user);
-              });
+              }
+        );
       }
     ));
 
