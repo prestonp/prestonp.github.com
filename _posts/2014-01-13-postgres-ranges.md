@@ -4,7 +4,7 @@ title: Calendar scheduling with Postgres date ranges
 categories: posts
 ---
 
-I've been working on writing a small calendar widget for scheduling holiday schedules at Goodybag.com. 
+I've been working on writing a small calendar widget for scheduling holidays at Goodybag.com. 
 For this particular widget, we want the ability to mark days when our partnered restaurants have 
 time off or close up for a holiday. During these _events_, as I call them, our users will be prompted with
 a friendly warning that the caterers are unable to fulfill an order. Cool.
