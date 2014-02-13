@@ -16,10 +16,11 @@ express js on the back end. We'll also use twitter's typeahead
 plugin on the front.
 
 Prequisites:
-  * Familiarity with
-    * expressjs
-    * PostgreSQL (and hopefully [https://github.com/brianc/node-postgres](node-postgres))
-  * Tons of patience setting up elasticsearch and some plugins
+  
+* Familiarity with
+  * expressjs
+  * PostgreSQL (and hopefully [node-postgres](https://github.com/brianc/node-postgres))
+* Tons of patience setting up elasticsearch and some plugins
 
 Elasticsearch Basics
 --------------------
