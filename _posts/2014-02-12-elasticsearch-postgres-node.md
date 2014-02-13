@@ -1,18 +1,25 @@
 ---
 layout: post
-title: Set up autocomplete with Postgres and Elasticsearch in node.js
+title: Set up autocomplete searchbox with elasticsearch
 category: posts
 ---
 
-Recipe: Autocomplete with postgres, elasticsearch, node.js
+Let's build a fancy autocompleting search widget! You've probably seen
+it in lots of places. Most recognize it from google search and texting 
+on smart phones. Type a few characters and a drop down appears with 
+predictive results. I wanted to develop a similar search widget for 
+goodybag.com so you can search for restaurants. Here's a guide on how
+to do so with elasticsearch.
 
-
-Let's build a fancy autocompleting search widget!
+The stack I'm using is going to be elasticsearch, postgres and 
+express js on the back end. We'll also use twitter's typeahead 
+plugin on the front.
 
 Prequisites:
-* Familiarity with
-  * expressjs
-  * PostgreSQL (and hopefully [https://github.com/brianc/node-postgres](node-postgres))
+  * Familiarity with
+    * expressjs
+    * PostgreSQL (and hopefully [https://github.com/brianc/node-postgres](node-postgres))
+  * Tons of patience setting up elasticsearch and some plugins
 
 Elasticsearch Basics
 --------------------
@@ -126,7 +133,7 @@ var options = {
     type: 'jdbc'
   , jdbc: {
       url: 'jdbc:postgresql://localhost:9200/cater'
-    , sql: 'select id, name from restaurants'
+    , sql: 'select id as _id, name from restaurants'
     , index: 'cater'
     , type: 'restaurant'
     , schedule: '0 0/5 * * * ?' // every 5 mins
@@ -145,6 +152,11 @@ request(options, function(err, res, body) {
 
 It will use the sql query for indexing data into /cater. The magic sauce 
 is in the `schedule` cron string which triggers updates every 5 minutes!
+
+A little gotcha I ran into was that if you don't set `_id`, then elasticsearch
+will index a *new* document instead of updating an existing one. Make sure 
+you select `_id` to avoid duplicates!!
+
 
 -------------------
 
